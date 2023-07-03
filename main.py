@@ -1,5 +1,21 @@
 #############################################################################
-# Copyright (C) 2023 CrowdWare. All right reserved.
+# Copyright (C) 2023 CrowdWare
+#
+# This file is part of Shift.
+#
+#  Shift is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  Shift is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with Shift.  If not, see <http://www.gnu.org/licenses/>.
+#
 #############################################################################
 
 from datetime import datetime, timedelta
@@ -68,26 +84,6 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     return 'Hello here is the webservice of Shift!'
-
-@app.route('/message', methods=['POST'])
-def message():
-    content = request.json
-    key = decryptStringGCM(content['key'])
-    name = content['name']
-    test = content["test"] # used only for unit testing
-
-    if key != SHIFT_API_KEY:
-        return jsonify(isError=True, message="wrong api key", statusCode=200)
-
-    if test == "true":
-        message = "Message from server"
-    else:
-        message = '<html>Hello ' + name + ', welcome back.<br><br>Have a look at our website <a href="http://shift.crowdware.at/">shift.crowdware.at/</a> for news.</html>'
-    
-    return jsonify(isError=False,
-                   message="Success",
-                   data=message,
-                   statusCode=200)
 
 @app.route('/register', methods=['POST'])
 def register():
